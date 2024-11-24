@@ -25,15 +25,8 @@ app.config["SECRET_KEY"] = os.getenv('LOCAL_SECRET_KEY')
 app.config["JWT_SECRET_KEY"] = os.getenv('LOCAL_JWT_SECRET_KEY')
 
 # Connect to MongoDB
-mongodb_uri = os.getenv('LOCAL_MONGODB_URI')
 mongodb_uri = "mongodb+srv://aj045045:aj045045ClusterProject@clusterproject.sxbcy.mongodb.net/SZhoes?retryWrites=true&w=majority&appName=ClusterProject"
-
-if not mongodb_uri:
-    raise ValueError("MongoDB URI not found in environment variables.")
-try:
-    connect(host=mongodb_uri)
-except Exception as e:
-    print(f"Error connecting to MongoDB: {e}")
+connect(host=mongodb_uri)
 
 if __name__ == "__main__":
     """
