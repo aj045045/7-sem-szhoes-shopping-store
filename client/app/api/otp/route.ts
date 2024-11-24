@@ -1,4 +1,4 @@
-import OTPEmailComp from "@/email/OTPEmail";
+import OTPEmailComp from "@/emails/OTPEmail";
 import { OTPEmailProps } from "@/interfaces/email";
 import { transporter } from "@/utility/other/mail";
 import { render } from '@react-email/components';

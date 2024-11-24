@@ -2,7 +2,6 @@ import { OTPEmailProps } from "@/interfaces/email";
 import { OTPGeneratorUtil } from "@/utility/other/otp-generator";
 import { Html, Head, Body, Tailwind, Text, Section, Img, Preview, Container, Heading, Hr } from "@react-email/components"
 
-const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "";
 
 export default function OTPEmailComp({ name, task, code, emailId }: OTPEmailProps) {
     return (
@@ -13,7 +12,7 @@ export default function OTPEmailComp({ name, task, code, emailId }: OTPEmailProp
                 <Body className="bg-neutral-200 py-5 select-none">
                     <Container className="items-center bg-white rounded-md flex text-center flex-col font-sans ">
                         <Section>
-                            <Img src={`${baseUrl}/static/icon.png`} className="w-28 p-2 my-2 mx-auto" />
+                            <Img src="https://res.cloudinary.com/dvvaf3oih/image/upload/v1732465488/icon_hgrz7f.png" className="w-28 p-2 my-2 mx-auto" />
                         </Section>
                         <Section>
                             <Heading className="text-3xl">Verify your email</Heading>

@@ -2,8 +2,6 @@ import { WelcomeEmailProps } from "@/interfaces/email";
 import { FormatDateUtil } from "@/utility/other/format-date";
 import { Html, Head, Body, Tailwind, Text, Section, Img, Preview, Container, Button, Markdown } from "@react-email/components";
 
-const baseUrl = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "";
-
 export default function WelcomeEmailComp({ createdAt, email, name }: WelcomeEmailProps) {
     const steps = ['Go to the website by clicking the login in now button', 'Log In the SZhoes using email Id and password', 'Add New Address', 'Order Product', 'Continue Shopping']
     return (
@@ -14,7 +12,7 @@ export default function WelcomeEmailComp({ createdAt, email, name }: WelcomeEmai
                 <Body className="bg-neutral-200 py-5 select-none">
                     <Container className="items-center bg-white rounded-md flex flex-col font-sans text-justify [word-spacing:3px] tracking-wide">
                         <Section>
-                            <Img src={`${baseUrl}/static/logo.png`} className="w-28 p-2 my-2 mx-auto" />
+                            <Img src="https://res.cloudinary.com/dvvaf3oih/image/upload/v1732465488/icon_hgrz7f.png" className="w-28 p-2 my-2 mx-auto" />
                         </Section>
                         <Section className="p-5">
                             <Text className="text-3xl font-semibold">
@@ -67,7 +65,7 @@ export default function WelcomeEmailComp({ createdAt, email, name }: WelcomeEmai
                                     )}
                                 </Section>
                             </Section>
-                            <Button href={process.env.VERCEL_URL} className="my-7 bg-green-400 text-center py-2 font-semibold text-xl w-full text-gray-700">Click to log in now!</Button>
+                            <Button className="my-7 bg-green-400 text-center py-2 font-semibold text-xl w-full text-gray-700">Log in now!</Button>
                             <Text>
                                 Happy shopping, and welcome again to the SZShoes family!
                             </Text>
