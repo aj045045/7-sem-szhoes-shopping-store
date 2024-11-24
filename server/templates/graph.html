@@ -1,0 +1,13 @@
+{% extends "index.html" %}
+{% block title %}Graphs{% endblock %}
+{% block head %}
+{{ super() }}
+<script src="https://cdn.tailwindcss.com"></script>
+{% endblock %}
+
+{% block content %}
+<div class="bg-slate-200 m-10">
+    <div class="text-3xl font-bold">{{ title }}</div>
+    <img src="data:image/png;base64,{{ src }}" class="p-10">
+</div>
+{% endblock %}

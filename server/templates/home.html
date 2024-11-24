@@ -1,0 +1,19 @@
+{% extends "index.html" %}
+{% block title %}Home{% endblock %}
+{% block head %}
+{{super()}}
+{% endblock %}
+{% block content %}
+<header>
+    <h1>Welcome to Flask {{ flask_page }} Server</h1>
+</header>
+<section>
+    <h2>In {{ flask_page }} server, Flask is used for:</h2>
+    <ul>
+        <li>Image Storing</li>
+        <li>Log Analysis</li>
+        <li>Graph Creation</li>
+        <li>CRUD Operation</li>
+    </ul>
+</section>
+{% endblock %}

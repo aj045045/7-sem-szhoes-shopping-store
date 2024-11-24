@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% block head %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title required %}{% endblock %} | SZhoes </title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='icon.png') }}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    {% endblock %}
+</head>
+
+<body class="font-sans">
+    <div>{% block content %}{% endblock %}</div>
+    <p class="fixed bottom-0 left-0 w-full bg-green-600 bg-gray-300 py-2 text-center text-sm shadow-md">
+        Copyright&#169; 2024 SZhoes. All rights are reserved
+    </p>
+</body>
+
+</html>
