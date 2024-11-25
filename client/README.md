@@ -19,8 +19,7 @@
 
 - NextAuth.js
 - JWT
-
-<!-- INSTALL SWEET ALERT OR LODASH-->
+- Cloud Fare
 
 ## FILE CONVENTIONS
 

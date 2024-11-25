@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 import os
 from mongoengine import connect
 from app.config import app
+from flask_cors import CORS
 
 # Load environment variables first
 env_keys = os.environ.keys()
@@ -23,6 +24,8 @@ def greeting():
 app.config['ENV'] = os.getenv('LOCAL_FLASK_ENV')
 app.config["SECRET_KEY"] = os.getenv('LOCAL_SECRET_KEY')
 app.config["JWT_SECRET_KEY"] = os.getenv('LOCAL_JWT_SECRET_KEY')
+
+CORS(app, resources={r"/*": {"origins": os.getenv('LOCAL_CLIENT_URL',"*")}})
 
 # Connect to MongoDB
 mongodb_uri = "mongodb+srv://aj045045:aj045045ClusterProject@clusterproject.sxbcy.mongodb.net/SZhoes?retryWrites=true&w=majority&appName=ClusterProject"

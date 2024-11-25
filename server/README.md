@@ -10,21 +10,21 @@ Flask-Restful
 ## NOT INSTALLED
 
 Flask-JWT-Extended
+Cloudinary
 
+## PYTHON PACKAGE
 
-<!-- PYTHON PACKAGE -->
 Tensorflow
 Keras
 LangChain
 Hugging face
+Plotly
 OpenNN
 PyBrain
 IBM Watson
 
-# Role Based login
-Use Session and before request for this
+## LOGIN CONSTRAINT - Using Session
 
-<!-- LOGIN CONSTRAINT -->
 if user is customer:
     can use any path related to customer
 if user is admin:

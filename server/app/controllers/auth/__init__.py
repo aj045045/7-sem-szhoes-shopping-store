@@ -16,6 +16,7 @@ def createResponse(data):
 from flask import Blueprint
 
 auth_bp = Blueprint('auth',__name__,url_prefix='/auth')
+
 # REVIEW - Import for auth registration
 from .customer import register
 

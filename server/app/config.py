@@ -2,13 +2,11 @@
 from flask import Flask,jsonify,request,session,abort
 from flask_sslify import SSLify
 from flask_talisman import Talisman
-from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 
 app = Flask(__name__,template_folder="../templates",static_url_path='/static',static_folder='../static')
 jwt = JWTManager(app)
 
-CORS(app)
 Talisman(app)
 SSLify(app)
 
