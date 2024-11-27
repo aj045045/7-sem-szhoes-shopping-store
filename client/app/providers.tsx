@@ -19,6 +19,8 @@ export function RootLayout({
                 <NextUIProvider>
                     <SWRConfig
                         value={{
+                            revalidateOnFocus:false,
+                            dedupingInterval: 60000,
                             fetcher: async (url: string) => {
                                 await new Promise((resolve) => setTimeout(resolve, 3000));
                                 const response = await fetch(url);
@@ -26,14 +28,10 @@ export function RootLayout({
                                 if (!response.ok || data.status == "error") {
                                     throw new Error(data.message);
                                 }
-                                return data;
+                                return data.data;
                             },
                             onError: (error: Error) => {
                                 ToastUtil.error(error.message);
-                                setTimeout(() => toast.dismiss(), 2000);
-                            },
-                            onSuccess: () => {
-                                ToastUtil.success("Data Fetch Successfully!");
                                 setTimeout(() => toast.dismiss(), 2000);
                             },
                         }}>

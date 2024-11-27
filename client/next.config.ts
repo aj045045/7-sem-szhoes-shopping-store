@@ -6,7 +6,6 @@ import withBundleAnalyzer from '@next/bundle-analyzer';
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   async rewrites() {
-    console.log('Rewrites function triggered');
     return [
       {
         source: '/s/:path*',

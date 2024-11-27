@@ -1,1 +1,1 @@
-export { useCountStore } from "./use-count";
+export { useUserStore } from "./use-user";

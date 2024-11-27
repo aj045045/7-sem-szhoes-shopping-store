@@ -1,5 +1,5 @@
 import { WelcomeEmailProps } from "@/interfaces/email";
-import { FormatDateUtil } from "@/utility/other/format-date";
+import { formatDateUtil } from "@/utility/other/format-date";
 import { Html, Head, Body, Tailwind, Text, Section, Img, Preview, Container, Button, Markdown } from "@react-email/components";
 
 export default function WelcomeEmailComp({ createdAt, email, name }: WelcomeEmailProps) {
@@ -88,6 +88,6 @@ export default function WelcomeEmailComp({ createdAt, email, name }: WelcomeEmai
 WelcomeEmailComp.PreviewProps = {
     name: "Ansh Yadav",
     email: "aj045045@gmail.com",
-    createdAt: FormatDateUtil("2024-09-27T05:48:15.015Z"),
+    createdAt: formatDateUtil("2024-09-27T05:48:15.015Z"),
 }
 

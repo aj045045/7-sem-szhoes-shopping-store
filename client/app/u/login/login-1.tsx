@@ -3,12 +3,13 @@ import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
 import { ChangeStepInterface } from "@/interfaces/login";
 import { getErrorMessage } from "@/utility/form-wrapper";
 import { OTPGeneratorUtil } from "@/utility/other/otp-generator";
 import { ToastUtil } from "@/utility/toast";
+import useSWR from "swr";
 
 /**
  * The component that is used to send the otp to user email address
@@ -18,6 +19,21 @@ import { ToastUtil } from "@/utility/toast";
 export function Login_1Page({ nextStep, errors, register, form }: ChangeStepInterface) {
     const [isDisabled, setIsDisabled] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
+    const [isPresent, setIsPresent] = useState(false);
+    const { data } = useSWR<string[]>("/s/auth/customer/get-email");
+
+    const watch = form?.watch("email");
+
+    useEffect(() => {
+        if (data && watch && form) {
+            if (data.includes(watch)) {
+                setIsPresent(false);
+            } else {
+                setIsPresent(true);
+            }
+        }
+    }, [watch, data, form]);
+
     const sendMail = () => {
         setIsDisabled(!isDisabled);
         const email = form?.getValues('email') || '';
@@ -50,7 +66,8 @@ export function Login_1Page({ nextStep, errors, register, form }: ChangeStepInte
                     radius="sm"
                     variant="bordered"
                     {...register('email')}
-                    {...getErrorMessage(errors.email)}
+                    isInvalid={!!errors.email || isPresent}
+                    errorMessage={errors.email?.message || "This email ID is not in use. Please try using a different email ID."}
                 />
                 <Input
                     label="Password"
@@ -64,7 +81,7 @@ export function Login_1Page({ nextStep, errors, register, form }: ChangeStepInte
                     {...register('password')}
                     {...getErrorMessage(errors.password)}
                 />
-                <div className={`text-sm text-green-600 mt-2 hover:underline hover:underline-offset-2 ${isDisabled && 'cursor-not-allowed opacity-50'}`}
+                <div className={`text-sm text-green-600 mt-2 hover:underline hover:underline-offset-2 ${isDisabled || isPresent && 'cursor-not-allowed opacity-50'}`}
                     onClick={sendMail} >Forgot Password?</div>
                 <Button type="submit"
                     variant="solid"

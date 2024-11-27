@@ -31,14 +31,14 @@ def before_request():
     if 'user' in session:
         user_role = session.get('user')
 
-        if user_role == 'customer' and not request.path.startswith('/customer'):
-            abort(403, description="You are not authorized to access this resource.")
+        if user_role == 'customer' and not request.path.startswith(('/customer','/auth','/')):
+            abort(403, description="You are not authorized to access this resource. from customer")
 
-        elif user_role == 'admin' and not request.path.startswith('/admin'):
-            abort(403, description="You are not authorized to access this resource.")
+        elif user_role == 'admin' and not request.path.startswith(('/admin','/auth','/')):
+            abort(403, description="You are not authorized to access this resource. from admin")
 
     elif not request.path.startswith(('/auth', '/')):
-        abort(403, description="You are not authorized to access this resource.")
+        abort(403, description="You are not authorized to access this resource. from auth")
 
 @app.after_request
 def convertToJson(response):
@@ -80,14 +80,6 @@ def errorHandler(error):
         "message": str(error)
     }
     return jsonify(data)
-
-@jwt.user_identity_loader
-def user_identity_lookup(user):
-    return user.id
-
-@jwt.user_lookup_loader
-def user_lookup_callback(_jwt_header, jwt_data):
-    return session['user']
 
 
 # REVIEW - Blueprint register

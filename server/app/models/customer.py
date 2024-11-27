@@ -22,3 +22,10 @@ class CustomerModel(Document):
     lastLoggedInAt = DateTimeField(default=datetime.now)
     
     meta = {'collection': 'customer' }
+    
+    def to_json(self):
+        # Convert the MongoDB document into a dictionary, ensuring we convert ObjectId to string
+        data = self.to_mongo().to_dict()
+        data['id'] = str(data['_id'])  # Convert ObjectId to string
+        del data['_id']  # Remove _id from the dictionary as we added it as 'id'
+        return data

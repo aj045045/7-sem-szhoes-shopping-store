@@ -8,8 +8,9 @@ import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
+import useSWR from "swr";
 
 /**
  * The Registration Component that is used for the registration 
@@ -17,8 +18,22 @@ import { FaEye, FaEyeSlash } from "react-icons/fa6";
  * @returns The user detail and password
  */
 export function Register_1Page({ errors, nextStep, register, form }: ChangeStepInterface) {
+
     const [isVisible, setIsVisible] = useState(false);
     const [isDisabled, setIsDisabled] = useState(false);
+    const [isPresent, setIsPresent] = useState(false);
+
+    const { data } = useSWR<string[]>("/s/auth/customer/get-email");
+    const watch = form?.watch("email");
+    useEffect(() => {
+        if (data && watch && form) {
+            if (data.includes(watch)) {
+                setIsPresent(true);
+            } else {
+                setIsPresent(false);
+            }
+        }
+    }, [watch, data, form]);
 
     const sendMail = async (): Promise<void> => {
         try {
@@ -92,7 +107,8 @@ export function Register_1Page({ errors, nextStep, register, form }: ChangeStepI
             <Input label="Email Address" classNames={{ base: "w-11/12 pt-3 z-0", inputWrapper: "h-12" }} isRequired labelPlacement="outside"
                 placeholder="mail@example.com" radius="sm" variant="bordered"
                 {...register('email')}
-                {...getErrorMessage(errors.email)}
+                isInvalid={!!errors.email || isPresent}
+                errorMessage={errors.email?.message || "This email ID is already in use.Please try using a different email ID."}
             />
             <Input label="Password" classNames={{ base: "w-11/12 pt-3 z-0", inputWrapper: "h-12" }} isRequired labelPlacement="outside"
                 placeholder="Enter 8 Characters or more"
@@ -102,7 +118,7 @@ export function Register_1Page({ errors, nextStep, register, form }: ChangeStepI
                 {...register('password')}
                 {...getErrorMessage(errors.password)}
             />
-            <Button disabled={isDisabled} variant="solid" size="md" radius="none" className={`bg-green-500 mt-10 uppercase w-10/12 self-center ${isDisabled && 'cursor-not-allowed opacity-50 data-[hover=true]:opacity-50'}`} onClick={sendMail}>send otp</Button>
+            <Button disabled={isDisabled || isPresent} variant="solid" size="md" radius="none" className={`bg-green-500 mt-10 uppercase w-10/12 mr-10 self-center ${isDisabled || isPresent && 'cursor-not-allowed opacity-50 data-[hover=true]:opacity-50'}`} onClick={sendMail}>send otp</Button>
         </div>
     </div>
     )

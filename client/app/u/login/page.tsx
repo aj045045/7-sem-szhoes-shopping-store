@@ -4,8 +4,11 @@ import { Login_1Page } from "./login-1";
 import { Login_2Page } from "./login-2";
 import { Login_3Page } from "./login-3";
 import { FormWrapperUtil } from "@/utility/form-wrapper";
-import { SubmitHandlerUtil } from "@/utility/submit-handler";
-import { LoginFormInterface, LoginValidationSchema } from "@/interfaces/login";
+import { LoginCustomerInterface, LoginFormInterface, LoginValidationSchema } from "@/interfaces/login";
+import { ResponseInterface } from "@/interfaces/response";
+import { ToastUtil } from "@/utility/toast";
+import { useUserStore } from "@/store";
+import { useRouter } from "next/navigation";
 
 /**
  * The components that is used as a wrapper for the login stepper form
@@ -14,15 +17,42 @@ import { LoginFormInterface, LoginValidationSchema } from "@/interfaces/login";
  */
 export default function LoginApp() {
     const [currentStep, setCurrentStep] = useState(1);
+    const { login } = useUserStore();
+    const router = useRouter();
     const nextStep = () => {
         setCurrentStep(prevStep => prevStep + 1);
     };
     const previousStep = () => {
         setCurrentStep(prevStep => prevStep - 1);
     };
+
+    const onSubmitLogin = (data: LoginFormInterface) => {
+        fetch('/s/auth/customer/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+            .then((response) => response.json())
+            .then((result: ResponseInterface<LoginCustomerInterface>) => {
+                if (result.status == "error" && result.message) {
+                    ToastUtil.error(result.message)
+                }
+                if (result.status == "success" && result.message) {
+                    ToastUtil.success(result.message)
+                }
+                if (result.data?.token && result.data.user) {
+                    localStorage.setItem("token", result.data.token);
+                    login(result.data.user);
+                    ToastUtil.success("Thanks for login");
+                    router.push("/customer/profile");
+                }
+            })
+    }
     return (
         <FormWrapperUtil<LoginFormInterface>
-            onSubmit={(data: LoginFormInterface) => SubmitHandlerUtil.onSubmitPost<LoginFormInterface>('/s/user', data)}
+            onSubmit={(data: LoginFormInterface) => onSubmitLogin(data)}
             validationSchema={LoginValidationSchema}
         >
             {(register, errors, form) => (<>

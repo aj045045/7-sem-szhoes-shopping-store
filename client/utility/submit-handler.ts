@@ -1,9 +1,8 @@
 import { ResponseInterface } from '@/interfaces/response';
-import { toast } from 'sonner';
+import { ToastUtil } from './toast';
 
 export class SubmitHandlerUtil {
     static async onSubmitPost<T>(url: string, data: T) {
-        console.log('FORM SUBMIT', JSON.stringify(data));
         fetch(url, {
             method: 'POST',
             headers: {
@@ -13,8 +12,11 @@ export class SubmitHandlerUtil {
         })
             .then((response) => response.json())
             .then((result: ResponseInterface) => {
-                if (result.status == "error") {
-                    toast.error(result.message);
+                if (result.status == "error" && result.message) {
+                    ToastUtil.error(result.message);
+                }
+                if (result.status == "success" && result.message) {
+                    ToastUtil.success(result.message);
                 }
                 window.location.reload();
             })

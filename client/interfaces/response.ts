@@ -1,5 +1,5 @@
-export interface ResponseInterface {
-    status: 'success' | 'error',
-    message?: string,
-    data?: []
+export interface ResponseInterface<T = unknown> {
+    status: 'success' | 'error';
+    message?: string;
+    data?: T;
 }

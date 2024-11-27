@@ -14,7 +14,7 @@
 - Progressive Web Apps (PWAs)
 - zustand
 - react-cmdk
-
+- Cryto JS
 #### Pending
 
 - NextAuth.js
