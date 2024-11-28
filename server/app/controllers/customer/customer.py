@@ -1,16 +1,6 @@
-from flask_restful import Resource
+from flask import request
+from . import ResponseUtil
+from app.services.customer.customer import CustomerService
 
-class CustomerController(Resource):
-    
-    def get():
-        pass
-    
-    def post():
-        pass
-    
-    def put():
-        pass
-    
-    def delete():
-        pass
-    
+def getCustomerDetail(customerId):
+    return ResponseUtil.createResponse(CustomerService.getCustomerDetail(customerId))

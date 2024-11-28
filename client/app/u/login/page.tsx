@@ -27,7 +27,7 @@ export default function LoginApp() {
     };
 
     const onSubmitLogin = (data: LoginFormInterface) => {
-        fetch('/s/auth/customer/login', {
+        fetch('/s/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

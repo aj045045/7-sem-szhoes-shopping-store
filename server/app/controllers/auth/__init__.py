@@ -31,5 +31,5 @@ auth_bp = Blueprint('auth',__name__,url_prefix='/auth')
 from .customer import register,get_email_id,login
 
 auth_bp.add_url_rule('/customer/register','customer_register',register,methods=['POST'])
-auth_bp.add_url_rule('/customer/get-email','customer_get_email',get_email_id,methods=['GET'])
-auth_bp.add_url_rule('/customer/login','customer_login',login,methods=['POST'])
+auth_bp.add_url_rule('/get-email','customer_get_email',get_email_id,methods=['GET'])
+auth_bp.add_url_rule('/login','customer_login',login,methods=['POST'])

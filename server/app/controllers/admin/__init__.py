@@ -14,12 +14,10 @@ def createResponse(data):
     }
     
 from flask import Blueprint
-from flask_restful import Api
 
 admin_bp = Blueprint('admin',__name__,url_prefix='/admin')
-api = Api(admin_bp)
 
 # REVIEW - Import from customer controller
-from .admin import AdminController
+from .admin import getAdminDetail
 
-api.add_resource(AdminController,'/')
+admin_bp.add_url_rule("/detail","admin_detail",getAdminDetail,methods=['GET'])

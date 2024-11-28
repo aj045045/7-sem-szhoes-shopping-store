@@ -20,7 +20,7 @@ export function Login_1Page({ nextStep, errors, register, form }: ChangeStepInte
     const [isDisabled, setIsDisabled] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
     const [isPresent, setIsPresent] = useState(false);
-    const { data } = useSWR<string[]>("/s/auth/customer/get-email");
+    const { data } = useSWR<string[]>("/s/auth/get-email");
 
     const watch = form?.watch("email");
 

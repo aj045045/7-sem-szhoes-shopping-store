@@ -23,7 +23,7 @@ export function Register_1Page({ errors, nextStep, register, form }: ChangeStepI
     const [isDisabled, setIsDisabled] = useState(false);
     const [isPresent, setIsPresent] = useState(false);
 
-    const { data } = useSWR<string[]>("/s/auth/customer/get-email");
+    const { data } = useSWR<string[]>("/s/auth/get-email");
     const watch = form?.watch("email");
     useEffect(() => {
         if (data && watch && form) {
