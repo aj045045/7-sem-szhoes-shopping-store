@@ -17,8 +17,11 @@ export class SubmitHandlerUtil {
                 }
                 if (result.status == "success" && result.message) {
                     ToastUtil.success(result.message);
+                    const timer = setTimeout(() => {
+                        window.location.reload();
+                    }, 3000);
+                    return () => clearTimeout(timer);
                 }
-                window.location.reload();
             })
     }
 }

@@ -20,7 +20,7 @@ def register():
     generatedOtp = data['generatedOtp']
     otp = data['otp']
     CustomerService.registerCustomer(name, email, phoneNo, password, generatedOtp, otp)
-    return ResponseUtil.createResponseMessage('Thank you for registering', 201)
+    return ResponseUtil.createResponseMessage('Thank you for registering')
 
 def get_email_id():
     """

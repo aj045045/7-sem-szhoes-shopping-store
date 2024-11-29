@@ -6,7 +6,7 @@ class CustomerModel(Document):
     email = StringField(required=True, unique=True)
     password = StringField(required=True)
     phoneNo = StringField()
-    addressId = ListField(ObjectIdField())
+    addressId = ListField(StringField(),default=[])
     notification = DictField(default={
         'delivery': True,
         'review': True,

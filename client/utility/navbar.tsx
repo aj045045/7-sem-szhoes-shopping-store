@@ -15,20 +15,22 @@ import { BsFillCartCheckFill } from "react-icons/bs";
 import { FaTruck } from "react-icons/fa6";
 import { NavBarItem } from "../interfaces/utility";
 import { KBarSearchUtil } from "./kbar";
+import { useUserStore } from "@/store";
+import { MdLogout } from "react-icons/md";
 
 /**
  * The Component for the Navbar rendering
  * 
  * @returns The Link and profile of user
  */
-export function NavbarUtil(): JSX.Element {
+export function NavbarUtil() {
 
     const [isScrolled, setIsScrolled] = useState<boolean>(true);
-    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
     const [prevScrollPos, setPrevScrollPos] = useState<number>(0);
     const inputRef = useRef<HTMLInputElement>(null);
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
     const path = usePathname();
+    const { name, email, logOut } = useUserStore();
     const menuItems: NavBarItem[] = [
         { page: "Home", link: "/u/home" },
         { page: "Men", link: "/u/men" },
@@ -53,7 +55,6 @@ export function NavbarUtil(): JSX.Element {
             document.removeEventListener('keydown', handleKeyDownClick as unknown as EventListener);
         };
     }, []);
-
 
     useEffect(() => {
         const handleScroll = () => {
@@ -117,41 +118,43 @@ export function NavbarUtil(): JSX.Element {
                     <KBarSearchUtil />
                 </NavbarItem>
                 <NavbarItem>
-                    {isLoggedIn ?
-                        (
-                            <Dropdown placement="bottom-end" showArrow>
-                                <DropdownTrigger>
-                                    <Avatar
-                                        size="sm"
-                                        as="button"
-                                        classNames={{ base: "bg-gradient-to-tl from-lime-400 to-orange-400 ", name: "text-2xl" }}
-                                        // name={data?.name.charAt(0)}
-                                        className="transition-transform"
-                                    />
-                                </DropdownTrigger>
-                                <DropdownMenu aria-label="Profile Actions" variant="flat">
-                                    <DropdownSection showDivider >
-                                        <DropdownItem href="/user/profile" key="profile" className="h-10 py-8 gap-2">
-                                            {/* <p className="font-semibold">{status && data?.name}</p> */}
-                                            {/* <p className="text-xs text-neutral-600">{status && data?.email}</p> */}
+                    <div className="flex flex-row items-center space-x-2">
+                        {(name && email) ?
+                            (
+                                <Dropdown placement="bottom-end" showArrow>
+                                    <DropdownTrigger>
+                                        <Avatar
+                                            size="sm"
+                                            as="button"
+                                            classNames={{ base: "bg-gradient-to-tl from-lime-400 to-orange-400 ", name: "text-2xl" }}
+                                            name={name.charAt(0)}
+                                            className="transition-transform"
+                                        />
+                                    </DropdownTrigger>
+                                    <DropdownMenu aria-label="Profile Actions" variant="flat">
+                                        <DropdownSection showDivider >
+                                            <DropdownItem href="/u/customer/profile" key="profile" className="h-10 py-8 gap-2">
+                                                <p className="font-semibold">{name}</p>
+                                                <p className="text-xs text-neutral-600">{email}</p>
+                                            </DropdownItem>
+                                        </DropdownSection>
+                                        <DropdownSection showDivider title="Actions">
+                                            <DropdownItem href="/u/customer/wishlist" startContent={<IoBookmarks />} key="wishlist" className="flex flex-row items-center">
+                                                Wishlist
+                                            </DropdownItem>
+                                            <DropdownItem href="/u/customer/order" startContent={<BsFillCartCheckFill />} key="order" className="flex flex-row items-center">
+                                                Orders
+                                            </DropdownItem>
+                                            <DropdownItem href="/u/customer/order-history" startContent={<FaTruck />} key="order-history" className="flex flex-row items-center">
+                                                Order History
+                                            </DropdownItem>
+                                        </DropdownSection>
+                                        <DropdownItem onClick={() => logOut} startContent={<MdLogout />} key="logout" color="danger">
+                                            Log Out
                                         </DropdownItem>
-                                    </DropdownSection>
-                                    <DropdownSection showDivider title="Actions">
-                                        <DropdownItem href="/user/wishlist" startContent={<IoBookmarks />} key="wishlist" className="flex flex-row items-center">
-                                            Wishlist
-                                        </DropdownItem>
-                                        <DropdownItem href="/user/order" startContent={<BsFillCartCheckFill />} key="order" className="flex flex-row items-center">
-                                            Orders
-                                        </DropdownItem>
-                                        <DropdownItem href="/user/order-history" startContent={<FaTruck />} key="order-history" className="flex flex-row items-center">
-                                            Order History
-                                        </DropdownItem>
-                                    </DropdownSection>
-                                </DropdownMenu>
-                            </Dropdown>
-                        )
-                        : (
-                            <div className="flex flex-row items-center space-x-2">
+                                    </DropdownMenu>
+                                </Dropdown>
+                            ) : (
                                 <Tooltip
                                     shouldFlip
                                     showArrow
@@ -170,27 +173,27 @@ export function NavbarUtil(): JSX.Element {
                                         <LuLogIn />
                                     </Link>
                                 </Tooltip>
-                                <Tooltip
-                                    shouldFlip
-                                    showArrow
-                                    offset={10}
-                                    shadow="lg"
-                                    placement="bottom"
-                                    size="lg"
-                                    radius="sm"
-                                    content={
-                                        <div className="px-0.5 py-1">
-                                            <div className="text-small font-bold">Cart</div>
-                                        </div>
-                                    }
-                                >
-                                    <Link className="text-2xl rounded-full text-black  p-2" href="/user/cart">
-                                        <FiShoppingCart />
-                                    </Link>
-                                </Tooltip>
-                            </div>
-                        )
-                    }
+                            )
+                        }
+                        <Tooltip
+                            shouldFlip
+                            showArrow
+                            offset={10}
+                            shadow="lg"
+                            placement="bottom"
+                            size="lg"
+                            radius="sm"
+                            content={
+                                <div className="px-0.5 py-1">
+                                    <div className="text-small font-bold">Cart</div>
+                                </div>
+                            }
+                        >
+                            <Link className="text-2xl rounded-full text-black  p-2" href="/user/cart">
+                                <FiShoppingCart />
+                            </Link>
+                        </Tooltip>
+                    </div>
                 </NavbarItem>
             </NavbarContent>
 

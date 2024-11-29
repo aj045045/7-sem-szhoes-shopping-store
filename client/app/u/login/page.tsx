@@ -46,10 +46,11 @@ export default function LoginApp() {
                     localStorage.setItem("token", result.data.token);
                     login(result.data.user);
                     ToastUtil.success("Thanks for login");
-                    router.push("/customer/profile");
+                    router.push("customer/profile");
                 }
             })
     }
+
     return (
         <FormWrapperUtil<LoginFormInterface>
             onSubmit={(data: LoginFormInterface) => onSubmitLogin(data)}
