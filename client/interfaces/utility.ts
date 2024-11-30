@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { FieldValues, UseFormReturn } from "react-hook-form";
+import { DefaultValues, FieldValues, UseFormReturn } from "react-hook-form";
 import * as yup from 'yup';
 
 export interface NavBarItem {
@@ -24,4 +24,5 @@ export interface FormWrapperInterface<T extends FieldValues> {
     className?: string;
     onSubmit: (data: T) => void;
     validationSchema: yup.ObjectSchema<T>;
+    defaultValues?: DefaultValues<T>;
 }

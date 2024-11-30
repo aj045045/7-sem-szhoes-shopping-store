@@ -15,7 +15,7 @@ export function AddAddressPage() {
                 <ModalContent>
                     {(onClose) => (
                         <FormWrapperUtil
-                            onSubmit={(data: AddressInterface) => SubmitHandlerUtil.onSubmitPost(`/s/customer/add-address/${userId}`, data)}
+                            onSubmit={(data: AddressInterface) => SubmitHandlerUtil.onSubmitPost<AddressInterface>(`/s/customer/add-address/${userId}`, data)}
                             validationSchema={AddressValidationSchema}
                         >
                             {(register, error) => (

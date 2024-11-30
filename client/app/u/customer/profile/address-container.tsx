@@ -22,19 +22,19 @@ export function AddressPage({ address }: { address: AddressInterface[] }) {
             </div>
             <div className="px-2">
                 {
-                    address.length > 0 ?
+                    address.length ?
                         address.map((addressItem: AddressInterface, index: number) => (
                             <div key={index}>
                                 <div className="flex flex-row mt-5">
                                     <Divider orientation="horizontal" className="-mr-10" />
-                                    <UpdateAddressPage />
+                                    <UpdateAddressPage address={addressItem} />
                                 </div>
                                 <div className="grid grid-cols-2">
                                     <Input
                                         label="Street"
                                         name="street"
                                         isReadOnly
-                                        value={addressItem.street} // Assuming AddressInterface has a `street` property
+                                        value={addressItem.street}
                                         classNames={{
                                             base: "w-11/12 pt-5 z-0",
                                             inputWrapper: "h-12  bg-neutral-300 border-2 border-neutral-400"

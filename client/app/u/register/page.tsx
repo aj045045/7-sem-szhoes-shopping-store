@@ -18,7 +18,7 @@ export default function RegisterApp() {
     };
     return (
         <FormWrapperUtil
-            onSubmit={(data: RegisterFormInterface) => SubmitHandlerUtil.onSubmitPost('/s/auth/customer/register', data)}
+            onSubmit={(data: RegisterFormInterface) => SubmitHandlerUtil.onSubmitPost<RegisterFormInterface>('/s/auth/customer/register', data)}
             validationSchema={RegisterValidationSchema}
         >
             {(register, errors, form) => (

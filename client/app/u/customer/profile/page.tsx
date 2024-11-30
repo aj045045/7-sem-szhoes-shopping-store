@@ -9,7 +9,6 @@ import { PasswordPage } from "./password";
 import useSWR from "swr";
 import { useUserStore } from "@/store";
 import { SkeletonPage } from "./skeleton";
-import { useEffect } from "react";
 
 /**
  * The component that is used as a wrapper for the profile page
@@ -18,18 +17,17 @@ import { useEffect } from "react";
  */
 export default function CustomerProfileApp() {
     const userId = useUserStore.getState().loadUserId();
-    const { data, isLoading } = useSWR<CustomerInterface>(`/s/customer/detail/${userId}`);
-    useEffect(() => console.log(data));
+    const { data, isLoading } = useSWR<CustomerInterface[]>(`/s/customer/detail/${userId}`);
     if (isLoading || !data) return <SkeletonPage />;
     return (
-        <form className="p-5 md:w-2/3 w-full mx-auto space-y-5">
+        <div className="p-5 md:w-2/3 w-full mx-auto space-y-5">
             <div className={`${montserratSubrayada.className} text-xl `}>My Profile</div>
-            <ImageDetailPage phoneNo={data.phoneNo} lastLoggedIn={data.lastLoggedInAt} updatedAt={data.updatedAt} />
-            <AddressPage address={data.addressId} />
+            <ImageDetailPage phoneNo={data[0].phoneNo} lastLoggedIn={data[0].lastLoggedInAt} updatedAt={data[0].updatedAt} />
+            <AddressPage address={data[0].addresses} />
             <PasswordPage />
-            <NotificationPage notifications={data.notification} />
+            <NotificationPage notifications={data[0].notification} />
             <DeleteAccountPage />
-        </form>
+        </div>
     )
 }
 

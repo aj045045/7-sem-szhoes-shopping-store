@@ -24,4 +24,49 @@ export class SubmitHandlerUtil {
                 }
             })
     }
+
+    static async onSubmitPut<T>(url: string, data: T) {
+        fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+            .then((response) => response.json())
+            .then((result: ResponseInterface) => {
+                if (result.status == "error" && result.message) {
+                    ToastUtil.error(result.message);
+                }
+                if (result.status == "success" && result.message) {
+                    ToastUtil.success(result.message);
+                    const timer = setTimeout(() => {
+                        window.location.reload();
+                    }, 3000);
+                    return () => clearTimeout(timer);
+                }
+            });
+    }
+
+    static async onSubmitDelete(url: string) {
+        fetch(url, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then((response) => response.json())
+            .then((result: ResponseInterface) => {
+                if (result.status === "error" && result.message) {
+                    ToastUtil.error(result.message);
+                }
+                if (result.status === "success" && result.message) {
+                    ToastUtil.success(result.message);
+                    const timer = setTimeout(() => {
+                        window.location.reload();
+                    }, 3000);
+                    return () => clearTimeout(timer);
+                }
+            });
+    }
 }

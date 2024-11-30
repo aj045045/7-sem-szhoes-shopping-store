@@ -27,10 +27,14 @@ class ResponseUtil:
 from flask import Blueprint
 
 # REVIEW - Import from customer controller
-from .customer import getCustomerDetail
-from .address import addAddress
+from .customer import getCustomerDetail,updateCustomerProfile,updatePassword
+from .address import addAddress,updateAddress,deleteAddress
 
 customer_bp = Blueprint('customer',__name__,url_prefix='/customer')
 
 customer_bp.add_url_rule('/detail/<customerId>','customer_detail',getCustomerDetail,methods=['GET'])
 customer_bp.add_url_rule('/add-address/<customerId>','customer_add_address',addAddress,methods=['POST'])
+customer_bp.add_url_rule('/profile/<customerId>','customer_update_profile',updateCustomerProfile,methods=['PUT'])
+customer_bp.add_url_rule('/address/<addressId>','customer_update_address',updateAddress,methods=['PUT'])
+customer_bp.add_url_rule('/address/<addressId>/<customerId>','customer_delete_address',deleteAddress,methods=['DELETE'])
+customer_bp.add_url_rule('/password/<customerId>','customer_update_password',updatePassword,methods=['PUT'])

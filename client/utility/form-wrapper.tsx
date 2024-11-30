@@ -8,9 +8,10 @@ export function FormWrapperUtil<T extends FieldValues>({
   className = "",
   onSubmit,
   validationSchema,
+  defaultValues
 }: FormWrapperInterface<T>) {
 
-  const form = useForm<T>({ resolver: yupResolver(validationSchema) as unknown as Resolver<T>, mode:'onChange' });
+  const form = useForm<T>({ defaultValues, resolver: yupResolver(validationSchema) as unknown as Resolver<T>, mode: 'onChange' });
 
   return (
     <form

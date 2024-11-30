@@ -1,6 +1,7 @@
 from flask import request
-from app.services.auth.customer import CustomerService
+from server.app.services.customer import CustomerService
 from . import ResponseUtil
+from app.models.customer import CustomerModel
 
 def register():
     """
@@ -60,3 +61,42 @@ def login():
     else:
         data = CustomerService.loginCustomer(email, password)
         return ResponseUtil.createResponse(data)
+
+from bson import ObjectId
+
+def pipeline(customerId):
+    search_id = ObjectId(customerId)  
+    pipeline = [
+    {
+        "$match": {
+            "_id": search_id 
+        }
+    },
+    {
+        "$limit": 1
+    },
+    {
+        "$lookup": {
+            "from": "address",
+            "localField": "addressId",
+            "foreignField": "_id",  # Field in the other collection
+            "as": "addresses" 
+        }
+    },
+    {
+        "$project": {
+            "_id": 1,
+            "phoneNo": 1,                       
+            "notification": 1,                  
+            "updatedAt": 1,
+            "lastLoggedInAt": 1,   
+            "addresses": 1
+        }
+    }
+]   
+    response = list(CustomerModel.objects.aggregate(pipeline))
+    for doc in response:
+        doc["_id"] = str(doc["_id"])
+        for address in doc.get("addresses", []):
+            address["_id"] = str(address["_id"])
+    return ResponseUtil.createResponse(response)
