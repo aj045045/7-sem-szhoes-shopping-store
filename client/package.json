@@ -15,6 +15,7 @@
     "@nextui-org/react": "^2.4.8",
     "@radix-ui/react-toast": "^1.2.2",
     "@react-email/components": "0.0.28",
+    "@react-pdf/renderer": "^4.1.5",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "crypto-js": "^4.2.0",

@@ -16,6 +16,7 @@
 - react-cmdk
 - Cryto JS
 - JS-cookie
+- @react-pdf/renderer
 
 #### Pending
 
