@@ -21,8 +21,11 @@ export interface LoginFormInterface {
 
 export const LoginValidationSchema = Yup.object({
     email: Yup.string()
-        .email('Invalid email address')
-        .required('Email is required'),
+    .matches(
+        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}@?$/, 
+        'Invalid email address format'
+    )
+    .required('Email is required'),
 
     generatedOtp: Yup.string().default(''),
 
@@ -64,4 +67,5 @@ export const LoginValidationSchema = Yup.object({
 export interface LoginCustomerInterface {
     token: string;
     user: UserState;
+    role: string;
 }

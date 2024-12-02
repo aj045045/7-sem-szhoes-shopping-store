@@ -1,5 +1,6 @@
 from flask import request
 from app.services.customer import CustomerService
+from app.services.admin import AdminService
 from . import ResponseUtil
 from app.models.customer import CustomerModel
 
@@ -58,6 +59,9 @@ def login():
             raise Exception("Passwords do not match")
         CustomerService.forgetPassword(email, generatedOtp, otp, newPassword, confirmPassword)
         return ResponseUtil.createResponseMessage("Customer password updated, please try logging in again")
+    elif email.endswith("@"):
+        data = AdminService.loginAdmin(email[:-1], password)
+        return ResponseUtil.createResponse(data)
     else:
         data = CustomerService.loginCustomer(email, password)
         return ResponseUtil.createResponse(data)

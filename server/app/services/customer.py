@@ -38,7 +38,9 @@ class CustomerService():
     @staticmethod
     def getAllEmail():
         users = CustomerModel.objects.only('email')
-        return [user.email for user in users]
+        list1 = [user.email for user in users]
+        list2 = [user.email+"@" for user in users]
+        return list1+list2
         
     @staticmethod
     def loginCustomer(emailId, password):
@@ -56,6 +58,7 @@ class CustomerService():
             response['id'] = data['id']
             response['name'] = data['name']
             responseData['user'] = response
+            responseData['role'] = 'customer'
             return responseData
         raise Exception("Email ID or Password is not correct")
 

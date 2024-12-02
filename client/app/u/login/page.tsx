@@ -43,11 +43,15 @@ export default function LoginApp() {
                 if (result.status == "success" && result.message) {
                     ToastUtil.success(result.message)
                 }
-                if (result.data?.token && result.data.user) {
+                if (result.data?.token && result.data.user && result.data.role) {
                     Cookies.set('token', result.data.token, { expires: 1 });
                     login(result.data.user);
                     ToastUtil.success("Thanks for login");
-                    router.push("customer/profile");
+                    if(result.data.role == "customer"){
+                        router.push("customer/profile");
+                    }else{
+                        router.push("/admin");
+                    }
                 }
             })
     }

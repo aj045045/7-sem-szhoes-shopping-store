@@ -4,7 +4,6 @@ import { ResponseInterface } from "@/interfaces/response";
 import { inter } from "@/langs";
 import { ToastUtil } from "@/utility/toast";
 import { NextUIProvider } from "@nextui-org/react";
-import { toast } from "sonner";
 import { SWRConfig } from "swr";
 
 export function RootLayout({
