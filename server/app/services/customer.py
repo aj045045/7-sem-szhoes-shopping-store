@@ -1,10 +1,10 @@
 from flask_jwt_extended import create_access_token
 from app.models.customer import CustomerModel
+from app.models.address import AddressModel
 import bcrypt
 from flask import session
 from bson import ObjectId
 from datetime import datetime
-
 
 class CustomerService():
     
@@ -48,7 +48,7 @@ class CustomerService():
         if match:
             responseData['token'] = create_access_token(identity=user.email)
             session['user'] = 'customer'
-            session['email'] = str(user.email)
+            session['id'] = str(user.id)
             data = user.to_json()
             response = {}
             response['cart'] = data['cart']
@@ -119,6 +119,32 @@ class CustomerService():
         data.save()
         
     @staticmethod
-    def updatePassword(customerId,password,newPassword,deletePassword):
+    def updatePassword(password,newPassword,confirmPassword):
+        customerId = session.get('id','')
         data = CustomerModel.objects(id=customerId).first()
+        if newPassword == confirmPassword and CustomerService.check_password(password.encode(),data.password.encode()):
+            data.password = CustomerService.hash_password(password.encode())
+            data.save()
+        else:
+            raise Exception("Customer password does not match")
+    
+    @staticmethod
+    def updateNotifications(notifications):
+        customerId = session.get('id','')
+        data = CustomerModel.objects(id=customerId).first()
+        data.notification = notifications
+        data.save()
         
+    def deleteAccount():
+        customerId = session.get('id','')
+        data = CustomerModel.objects(id=customerId).first()
+        for i in data.addressId:
+            address = AddressModel.objects(id=i).first()
+            address.delete()
+        data.delete()
+        session.pop("id", None) 
+        session.pop("user", None) 
+        
+    def logOut():
+        session.pop("id", None) 
+        session.pop("user", None) 

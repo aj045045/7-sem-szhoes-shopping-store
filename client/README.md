@@ -15,6 +15,8 @@
 - zustand
 - react-cmdk
 - Cryto JS
+- JS-cookie
+
 #### Pending
 
 - NextAuth.js

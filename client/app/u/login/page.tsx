@@ -9,6 +9,7 @@ import { ResponseInterface } from "@/interfaces/response";
 import { ToastUtil } from "@/utility/toast";
 import { useUserStore } from "@/store";
 import { useRouter } from "next/navigation";
+import Cookies from 'js-cookie';
 
 /**
  * The components that is used as a wrapper for the login stepper form
@@ -43,7 +44,7 @@ export default function LoginApp() {
                     ToastUtil.success(result.message)
                 }
                 if (result.data?.token && result.data.user) {
-                    localStorage.setItem("token", result.data.token);
+                    Cookies.set('token', result.data.token, { expires: 1 });
                     login(result.data.user);
                     ToastUtil.success("Thanks for login");
                     router.push("customer/profile");

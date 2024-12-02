@@ -28,7 +28,6 @@ export function UpdateAddressPage({ address }: { address: AddressInterface }) {
                         >
                             {(register, errors) => (
                                 <>
-
                                     <ModalHeader className="flex flex-col gap-1 bg-green-200">Update Address </ModalHeader>
                                     <ModalBody>
                                         <div className="grid grid-cols-2">

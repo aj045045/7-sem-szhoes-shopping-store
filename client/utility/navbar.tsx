@@ -7,7 +7,7 @@ import { Tooltip } from "@nextui-org/tooltip";
 import { Avatar } from "@nextui-org/avatar";
 import { comforterBrush, montserratSubrayada } from "@/langs";
 import { motion } from "framer-motion";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { LuLogIn } from "react-icons/lu";
 import { FiShoppingCart } from "react-icons/fi";
 import { IoBookmarks } from "react-icons/io5";
@@ -17,6 +17,9 @@ import { NavBarItem } from "../interfaces/utility";
 import { KBarSearchUtil } from "./kbar";
 import { useUserStore } from "@/store";
 import { MdLogout } from "react-icons/md";
+import { ResponseInterface } from "@/interfaces/response";
+import { ToastUtil } from "./toast";
+import Cookies from 'js-cookie';
 
 /**
  * The Component for the Navbar rendering
@@ -65,7 +68,28 @@ export function NavbarUtil() {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, [prevScrollPos]);
+    const router = useRouter();
 
+    const handleLogOut = () => {
+        fetch('/s/customer/log-out', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then((response) => response.json())
+            .then((result: ResponseInterface) => {
+                if (result.status === "error" && result.message) {
+                    ToastUtil.error(result.message);
+                }
+                if (result.status === "success" && result.message) {
+                    ToastUtil.success(result.message);
+                    Cookies.remove('token');
+                    logOut();
+                    router.push("/u/login");
+                }
+            });
+    }
     return <>
         <Navbar
             position={`${isScrolled ? "sticky" : "static"}`}
@@ -149,7 +173,7 @@ export function NavbarUtil() {
                                                 Order History
                                             </DropdownItem>
                                         </DropdownSection>
-                                        <DropdownItem onClick={() => logOut} startContent={<MdLogout />} key="logout" color="danger">
+                                        <DropdownItem onClick={() => handleLogOut()} startContent={<MdLogout />} key="logout" color="danger">
                                             Log Out
                                         </DropdownItem>
                                     </DropdownMenu>

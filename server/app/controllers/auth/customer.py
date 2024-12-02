@@ -1,5 +1,5 @@
 from flask import request
-from server.app.services.customer import CustomerService
+from app.services.customer import CustomerService
 from . import ResponseUtil
 from app.models.customer import CustomerModel
 

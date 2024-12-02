@@ -29,16 +29,12 @@ export const useUserStore = create<UserState & UserActions>()(
                 name: userData.name || state.name,
             })),
 
-            logOut: () => {
-                localStorage.removeItem('token');
-                set(() => ({
+            logOut: () => set(() => ({
                     cart: {},
                     email: '',
                     id: '',
                     name: '',
-                }));
-            },
-
+                })),
             loadUserId: () => {
                 const encryptedId = get().id;
                 if (encryptedId) {
