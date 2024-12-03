@@ -17,6 +17,8 @@
 - Cryto JS
 - JS-cookie
 - @react-pdf/renderer
+- react-markdown
+- remark-gfm
 
 #### Pending
 

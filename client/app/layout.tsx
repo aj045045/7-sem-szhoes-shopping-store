@@ -5,7 +5,7 @@ import { RootLayout } from "./providers";
 export const metadata: Metadata = {
   title: {
     default: 'SZhoes',
-    template: '%s | Ansh Yadav',
+    template: '%s | SZhoes',
   },
   manifest: "/manifest.json",
   description: 'SZhoes shopping store',

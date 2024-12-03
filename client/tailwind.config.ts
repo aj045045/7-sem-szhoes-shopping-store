@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 import { nextui } from '@nextui-org/react';
 import tailwindcssAnimate from 'tailwindcss-animate';
+import typoGraphy from '@tailwindcss/typography';
 
 export default {
 	darkMode: ['class'],
@@ -61,5 +62,5 @@ export default {
 			}
 		}
 	},
-	plugins: [nextui(), tailwindcssAnimate],
+	plugins: [nextui(), tailwindcssAnimate, typoGraphy],
 } satisfies Config;
