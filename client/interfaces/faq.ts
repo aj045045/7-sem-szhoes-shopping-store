@@ -16,3 +16,17 @@ export const FaqYupSchema = Yup.object({
         .max(2000, 'Answer must not exceed 2000 characters'),
 });
 
+
+
+export interface FaqSWRInterface {
+    faqs: FaqSWRInterface[];
+    total_faqs: string;
+    total_pages: number;
+    page: number;
+}
+
+export interface FaqSWRInterface {
+    _id: string;
+    answer: string;
+    question: string;
+}

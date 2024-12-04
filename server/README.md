@@ -6,10 +6,15 @@ python-dotenv
 Flask-SSLify
 Flask-Cors
 Flask-Restful
+Flask-JWT-Extended
+Transformer
+Torch
+Pinecone
+pip install nltk spacy textblob transformers torch
+python -m spacy download en_core_web_sm
 
 ## NOT INSTALLED
 
-Flask-JWT-Extended
 Cloudinary
 
 ## PYTHON PACKAGE
@@ -26,11 +31,9 @@ IBM Watson
 ## LOGIN CONSTRAINT - Using Session
 
 if user is customer:
-    can use any path related to customer
+can use any path related to customer
 if user is admin:
-    session[role] == (role1, role2)
-    request.path.startswith(session[role])
+session[role] == (role1, role2)
+request.path.startswith(session[role])
 if user not logged in:
-    only access auth route
-
-
+only access auth route

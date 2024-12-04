@@ -19,13 +19,13 @@ export function AddFaqPage() {
                             <Input label="Question" classNames={{ base: "w-11/12 pt-5 z-0", inputWrapper: "h-12" }} labelPlacement="outside"
                                 {...register('question')}
                                 {...getErrorMessage(error.question)}
-                                placeholder="Enter the faq question" radius="sm" variant="bordered"
+                                placeholder="Enter your question here..." radius="sm" variant="bordered"
                             />
                             <Textarea
                                 label="Answer"
                                 radius="sm"
                                 variant="bordered"
-                                placeholder="Enter your answer"
+                                placeholder="Write your answer here..."
                                 disableAnimation
                                 {...register('answer')}
                                 {...getErrorMessage(error.answer)}
@@ -33,7 +33,7 @@ export function AddFaqPage() {
                                 labelPlacement="outside"
                                 classNames={{
                                     base: "w-11/12 pt-5 z-0",
-                                    input: "resize-y min-h-[40px]",
+                                    input: "resize-y min-h-36",
                                 }}
                             />
                             <Button type="submit" className="text-green-950 bg-green-500 mt-5 w-1/2" radius="none" >
