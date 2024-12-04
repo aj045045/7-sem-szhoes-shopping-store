@@ -10,13 +10,6 @@ class VectorService:
         indexes = self.pc.list_indexes().names()
         print("Available indexes:", indexes)
 
-    def delete_index(self, index: str) -> None:
-        if index in self.pc.list_indexes().names():
-            self.pc.delete_index(index)
-            print(f"Index '{index}' deleted successfully!")
-        else:
-            print(f"Index '{index}' does not exist.")
-
     def add_vector(self, index: str, vector_id: str, values: list[float], metadata: dict = None) -> None:
         if index in self.pc.list_indexes().names():
             index_client = self.pc.Index(index)
@@ -41,3 +34,15 @@ class VectorService:
             print(f"Vector '{vector_id}' deleted from index '{index}' successfully!")
         else:
             print(f"Index '{index}' does not exist.")
+            
+    def update_vector(self, index: str, vector_id: str, values: list[float], metadata: dict = None) -> None:
+        if index in self.pc.list_indexes().names():
+            index_client = self.pc.Index(index)
+            vector_info = index_client.fetch(ids=[vector_id])
+            if vector_id in vector_info.get("vectors", {}):
+                index_client.upsert(vectors=[(vector_id, values, metadata)])
+                print(f"Vector '{vector_id}' updated in index '{index}' successfully!")
+            else:
+                print(f"Vector '{vector_id}' does not exist in index '{index}'. Cannot update non-existent vector.")
+        else:
+            print(f"Index '{index}' does not exist. Please create it first.")

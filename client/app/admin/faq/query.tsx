@@ -13,6 +13,8 @@ import { FaQuestion } from "react-icons/fa";
 import { FaqSWRInterface, FaqWrapperSWRInterface } from "@/interfaces/faq";
 import LoadingApp from "@/app/loading";
 import { ResponseInterface } from "@/interfaces/response";
+import { EditFaqPage } from "./update-faq";
+import { DeleteFaqPage } from "./delete-faq";
 
 export function QueryApp() {
 
@@ -51,6 +53,15 @@ export function QueryApp() {
     useEffect(() => console.log(data), [data]);
     useEffect(() => console.log("search data", searchData), [searchData]);
     if (isLoading) return <LoadingApp />;
+
+    const updateDeleteButton = (item: FaqSWRInterface) => {
+        return (
+            <div className="flex space-x-2 items-center">
+                <EditFaqPage _id={item._id} answer={item.answer} question={item.question} />
+                <DeleteFaqPage _id={item._id} />
+            </div>
+        )
+    }
     return (
         <>
             <DataCardUtil title="Total FAQs" value={data?.total_faqs || "0"} icon={<FaQuestion />} />
@@ -94,7 +105,7 @@ export function QueryApp() {
 
                 {data?.faqs && <Accordion variant="shadow" className="w-2/3">
                     {data?.faqs.map((item, index: number) => (
-                        <AccordionItem key={index} indicator={<FaLink />} aria-label={item.question} title={item.question}>
+                        <AccordionItem startContent={updateDeleteButton(item)} key={index} indicator={<FaLink />} aria-label={item.question} title={item.question}>
                             <MarkdownConverterUtil markdownString={item.answer} />
                         </AccordionItem>
                     ))}

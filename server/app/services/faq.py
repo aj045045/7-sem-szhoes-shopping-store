@@ -40,3 +40,21 @@ class FaqService:
         faq_items = FaqModel.objects(id__in=value)
         faq_data = [ {**faq.to_mongo().to_dict(), "_id": str(faq.id)} for faq in faq_items ]
         return faq_data
+    
+    @staticmethod
+    def updateFaq(faqId:str,question:str,answer:str):
+        model = FaqModel.objects(id=faqId).first()
+        model.answer = answer
+        model.question = question
+        model.save()
+        preProcess = PreProcessingService()
+        encodeText = preProcess.encode_text(answer)
+        vs = VectorService()
+        vs.update_vector('faq',str(model.id),encodeText)
+        
+    @staticmethod
+    def deleteFaq(faqId:str):
+        model = FaqModel.objects(id=faqId).first()
+        vs = VectorService()
+        vs.delete_vector('faq',str(model.id))
+        model.delete()

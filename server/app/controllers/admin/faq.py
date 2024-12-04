@@ -17,3 +17,12 @@ def searchFaq():
     if search:
         data = FaqService.searchFaq(search)
         return ResponseUtil.createResponse(data)
+
+def deleteFaq(faqId):
+    FaqService.deleteFaq(faqId)
+    return ResponseUtil.createResponseMessage("FAQ deleted successfully")
+
+def updateFaq(faqId):
+    data = request.get_json()
+    FaqService.updateFaq(faqId,data['question'],data['answer'])
+    return ResponseUtil.createResponseMessage("FAQ updated successfully")
