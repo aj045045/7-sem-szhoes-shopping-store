@@ -8,6 +8,12 @@ def addFaq():
     return ResponseUtil.createResponseMessage("FAQ added") 
 
 def getFaq():
-    page = int(request.args.get('page', 1))  
+    page = int(request.args.get('page', 0))  
     data = FaqService.getFaq(page)
     return ResponseUtil.createResponse(data)
+
+def searchFaq():
+    search = request.args.get('search', None)
+    if search:
+        data = FaqService.searchFaq(search)
+        return ResponseUtil.createResponse(data)

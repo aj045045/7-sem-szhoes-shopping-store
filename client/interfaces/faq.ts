@@ -18,7 +18,7 @@ export const FaqYupSchema = Yup.object({
 
 
 
-export interface FaqSWRInterface {
+export interface FaqWrapperSWRInterface {
     faqs: FaqSWRInterface[];
     total_faqs: string;
     total_pages: number;

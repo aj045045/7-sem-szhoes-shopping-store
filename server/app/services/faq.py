@@ -11,8 +11,7 @@ class FaqService:
         model.question = question
         model.save()
         preProcess = PreProcessingService()
-        newText = preProcess.preprocess_text(answer)
-        encodeText = preProcess.encode_text(newText)
+        encodeText = preProcess.encode_text(answer)
         vs = VectorService()
         vs.add_vector('faq',str(model.id),encodeText)
 
@@ -31,3 +30,13 @@ class FaqService:
         data['page'] = page
         data['total_pages'] = (total_faqs + per_page - 1) // per_page
         return data
+
+    @staticmethod
+    def searchFaq(query:str):
+        preProcess = PreProcessingService()
+        encodedText = preProcess.encode_text(query)
+        vs = VectorService()
+        value = vs.query_vector('faq',encodedText.tolist())
+        faq_items = FaqModel.objects(id__in=value)
+        faq_data = [ {**faq.to_mongo().to_dict(), "_id": str(faq.id)} for faq in faq_items ]
+        return faq_data

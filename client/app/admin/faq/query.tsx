@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useRef, useState } from "react";
-import { Accordion, AccordionItem, Chip, Input, Kbd, Pagination } from "@nextui-org/react";
+import { Accordion, AccordionItem, Chip, Input, Pagination } from "@nextui-org/react";
 import { FaLink } from "react-icons/fa6";
 import { comforterBrush, montserratSubrayada } from "@/langs";
 import { IoSearchSharp } from "react-icons/io5";
@@ -10,7 +10,9 @@ import { IoMdAdd } from "react-icons/io";
 import useSWR from "swr";
 import { DataCardUtil } from "@/utility/admin/data-card-util";
 import { FaQuestion } from "react-icons/fa";
-import { FaqSWRInterface } from "@/interfaces/faq";
+import { FaqSWRInterface, FaqWrapperSWRInterface } from "@/interfaces/faq";
+import LoadingApp from "@/app/loading";
+import { ResponseInterface } from "@/interfaces/response";
 
 export function QueryApp() {
 
@@ -18,10 +20,17 @@ export function QueryApp() {
     const [inputValue, setInputValue] = useState("");
     const [isAdd, setIsAdd] = useState(false);
     const [page, setPage] = useState(1);
-    const { data, isLoading } = useSWR<FaqSWRInterface>(`/s/admin/faq?page=${page}`);
-
-    const handleSearch = () => {
-        alert("Search initiated for:" + inputValue);
+    const { data, isLoading } = useSWR<FaqWrapperSWRInterface>(`/s/admin/faq?page=${page}`);
+    const [searchData, setSearchData] = useState<FaqSWRInterface[] | null>(null);
+    const handleSearch = async () => {
+        const response = await fetch(`/s/admin/faq/search?search=${inputValue}`);
+        const data: ResponseInterface<FaqSWRInterface[]> = await response.json();
+        if (!response.ok || data.status == "error") {
+            throw new Error(data.message);
+        }
+        if (data.data) {
+            setSearchData(data.data);
+        }
     };
 
     useEffect(() => {
@@ -40,7 +49,8 @@ export function QueryApp() {
     }, []);
 
     useEffect(() => console.log(data), [data]);
-    if (isLoading) return <>Loading...</>;
+    useEffect(() => console.log("search data", searchData), [searchData]);
+    if (isLoading) return <LoadingApp />;
     return (
         <>
             <DataCardUtil title="Total FAQs" value={data?.total_faqs || "0"} icon={<FaQuestion />} />
@@ -50,14 +60,14 @@ export function QueryApp() {
                 <div className="w-2/3 flex flex-col ">
                     <div className="flex space-x-2 items-center">
                         <Input
+                            isClearable
                             ref={searchInputRef} // Set the ref to the input field
                             startContent={<IoSearchSharp />}
-                            endContent={<Kbd keys={["ctrl"]}>K</Kbd>}
                             variant="faded"
                             size="lg"
                             onChange={() => setInputValue(searchInputRef.current?.value || "")}
                             classNames={{ inputWrapper: "border-neutral-300" }}
-                            placeholder="Search..."
+                            placeholder="Ctrl + K for Search..."
                             onKeyDown={(event) => {
                                 if (event.key === "Enter") {
                                     handleSearch();
@@ -69,14 +79,26 @@ export function QueryApp() {
                     {isAdd && <AddFaqPage />}
                     <span className={`${inputValue.length > 3 ? "block" : "text-transparent"} text-sm text-red-600 mt-2`}>Please press the Enter key in order to submit your query and initiate the search process.</span>
                 </div>
+                {searchData &&
+                    <>
+                        <div className="text-lg text-neutral-500">Search results</div>
+                        <Accordion variant="shadow" className="w-2/3">
+                            {searchData.map((item, index: number) => (
+                                <AccordionItem key={index} indicator={<FaLink />} aria-label={item.question} title={item.question}>
+                                    <MarkdownConverterUtil markdownString={item.answer} />
+                                </AccordionItem>
+                            ))}
+                        </Accordion>
+                    </>
+                }
+
                 {data?.faqs && <Accordion variant="shadow" className="w-2/3">
                     {data?.faqs.map((item, index: number) => (
                         <AccordionItem key={index} indicator={<FaLink />} aria-label={item.question} title={item.question}>
                             <MarkdownConverterUtil markdownString={item.answer} />
                         </AccordionItem>
                     ))}
-                </Accordion>
-                }
+                </Accordion>}
                 {data?.page &&
                     <Pagination classNames={{ wrapper: "mx-auto" }} size="lg" isCompact loop showControls color="success" total={data?.total_pages}
                         onChange={setPage}

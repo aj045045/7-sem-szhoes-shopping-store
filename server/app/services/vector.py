@@ -1,4 +1,5 @@
 from pinecone import Pinecone
+import numpy as np
 
 class VectorService:
     def __init__(self) -> None:    
@@ -24,13 +25,12 @@ class VectorService:
         else:
             print(f"Index '{index}' does not exist. Please create it first.")
 
-    def query_vector(self, index: str, query_values: list[float], top_k: int = 10) -> None:
+    def query_vector(self, index: str, query_values: list[float], top_k: int = 3) -> None:
         if index in self.pc.list_indexes().names():
             index_client = self.pc.Index(index)
-            results = index_client.query(queries=[query_values], top_k=top_k)
-            print("Query Results:")
-            for match in results.matches:
-                print(f"ID: {match.id}, Score: {match.score}")
+            results = index_client.query(vector=[query_values], top_k=top_k)
+            value = [(i.id, i.score) for i in results.matches]
+            return [x[0] for x in sorted(value, key=lambda x: x[1], reverse=True)]
         else:
             print(f"Index '{index}' does not exist.")
 

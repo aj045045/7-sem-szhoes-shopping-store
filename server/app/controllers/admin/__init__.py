@@ -31,8 +31,9 @@ admin_bp = Blueprint('admin',__name__,url_prefix='/admin')
 
 # REVIEW - Import from customer controller
 from .admin import getAdminDetail
-from .faq import addFaq, getFaq
+from .faq import addFaq, getFaq,searchFaq
 
 admin_bp.add_url_rule("/detail","admin_detail",getAdminDetail,methods=['GET'])
 admin_bp.add_url_rule("/faq","admin_add_faq",addFaq,methods=['POST'])
 admin_bp.add_url_rule("/faq","admin_get_faq",getFaq,methods=['GET'])
+admin_bp.add_url_rule("/faq/search","admin_search_faq",searchFaq,methods=['GET'])
