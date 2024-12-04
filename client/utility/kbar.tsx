@@ -4,10 +4,17 @@ import { useEffect, useState } from "react";
 import { Kbd } from "@nextui-org/react";
 import { IoIosSearch } from "react-icons/io";
 import { ToastUtil } from "./toast";
+import Cookies from 'js-cookie';
+import { HiOutlineLogout } from "react-icons/hi";
+import { IoMdMale } from "react-icons/io";
+import { IoFemale } from "react-icons/io5";
+import { TbPerfume } from "react-icons/tb";
+import { FaQuestionCircle } from "react-icons/fa";
 
 export function KBarSearchUtil() {
     const [open, setOpen] = useState<boolean>(false);
     const [search, setSearch] = useState("");
+
 
     const filteredItems = filterItems(
         [
@@ -32,6 +39,12 @@ export function KBarSearchUtil() {
                         children: "Login",
                         icon: "ArrowLeftOnRectangleIcon",
                         href: "/u/login"
+                    },
+                    {
+                        id: "faq",
+                        children: "Faq",
+                        icon: FaQuestionCircle,
+                        href: "/u/faq"
                     }
                 ],
             },
@@ -42,13 +55,13 @@ export function KBarSearchUtil() {
                     {
                         id: "men",
                         children: "Men Products",
-                        icon: "UserCircleIcon",
+                        icon: IoMdMale,
                         href: "#",
                     },
                     {
                         id: "women",
                         children: "Women Products",
-                        icon: "UserCircleIcon",
+                        icon: IoFemale,
                         href: "#",
                     },
                     {
@@ -60,7 +73,7 @@ export function KBarSearchUtil() {
                     {
                         id: "perfume",
                         children: "Perfumes",
-                        icon: "SparklesIcon",
+                        icon: TbPerfume,
                         href: "#",
                     },
                     {
@@ -69,19 +82,25 @@ export function KBarSearchUtil() {
                         icon: "WalletIcon",
                         href: "#",
                     },
-                    {
-                        id: "log-out",
-                        children: "Log out",
-                        icon: "ArrowRightOnRectangleIcon",
-                        onClick: () => {
-                            ToastUtil.success("Logged Out Successfully!")
-                        },
-                    },
+                    // Conditionally add the Log out item based on the TOKEN cookie
+                    ...(Cookies.get("TOKEN")
+                        ? [{
+                            id: "log-out",
+                            children: "Log out",
+                            icon: HiOutlineLogout,  // Resolve icon name to component
+                            onClick: () => {
+                                ToastUtil.success("Logged Out Successfully!");
+                                Cookies.remove("TOKEN"); // Optionally remove the TOKEN cookie on logout
+                            },
+                        }]
+                        : []
+                    ),
                 ],
             },
         ],
         search
     );
+
 
     // REVIEW - Ctrl + K Press Handler
     useEffect(() => {

@@ -35,13 +35,14 @@ export function FooterUtil() {
         },
         {
             type: "Help", list: [
-                { link: "/login", data: "Login" },
-                { link: "/register", data: "Register" },
-                { link: "/home", data: "Home" },
-                { link: "/blog", data: "Blogs" },
-                { link: "/men", data: "men" },
-                { link: "/women", data: "women" },
-                { link: "/kids", data: "kids" },
+                { link: "/u/faq", data: "FAQ's" },
+                { link: "/u/login", data: "Login" },
+                { link: "/u/register", data: "Register" },
+                { link: "/u/home", data: "Home" },
+                { link: "/u/blog", data: "Blogs" },
+                { link: "/u/men", data: "men" },
+                { link: "/u/women", data: "women" },
+                { link: "/u/kids", data: "kids" },
             ]
         },
     ]
