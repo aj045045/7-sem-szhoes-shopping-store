@@ -1,17 +1,16 @@
 ## INSTALLED
 
-Flask
-Flask-Talisman
-python-dotenv
-Flask-SSLify
-Flask-Cors
-Flask-Restful
-Flask-JWT-Extended
-Transformer
-Torch
-Pinecone
-pip install nltk spacy textblob transformers torch
-python -m spacy download en_core_web_sm
+    Flask
+    Flask-Talisman
+    python-dotenv
+    Flask-SSLify
+    Flask-Cors
+    Flask-JWT-Extended
+    Transformer
+    Torch
+    Pinecone
+    pip install nltk spacy textblob transformers torch
+    python -m spacy download en_core_web_sm
 
 ## NOT INSTALLED
 
@@ -37,3 +36,7 @@ session[role] == (role1, role2)
 request.path.startswith(session[role])
 if user not logged in:
 only access auth route
+
+```
+gunicorn -c gunicorn.conf.py your_flask_app:app
+```

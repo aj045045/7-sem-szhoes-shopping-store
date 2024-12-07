@@ -34,3 +34,8 @@ auth_bp.add_url_rule('/customer/register','customer_register',register,methods=[
 auth_bp.add_url_rule('/get-email','get_email',get_email_id,methods=['GET'])
 auth_bp.add_url_rule('/login','login',login,methods=['POST'])
 auth_bp.add_url_rule('/pipeline/<customerId>','pipeline',pipeline,methods=['GET'])
+
+# REVIEW - Bot
+from .bot import faqBot
+
+auth_bp.add_url_rule('/faq-bot','faq-bot',faqBot,methods=['GET'])

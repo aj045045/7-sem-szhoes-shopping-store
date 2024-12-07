@@ -31,7 +31,6 @@ export function RootLayout({
                             },
                             onError: (error: Error) => {
                                 ToastUtil.error(error.message);
-                                // setTimeout(() => toast.dismiss(), 2000);
                             },
                         }}>
                         {children}

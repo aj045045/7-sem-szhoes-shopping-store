@@ -8,28 +8,25 @@ import { comforterBrush, montserratSubrayada } from "@/langs";
 import { Input } from "@nextui-org/react";
 import { IoChatboxEllipses, IoSend } from "react-icons/io5";
 import { useState } from "react";
+import { SubmitHandlerUtil } from "@/utility/submit-handler";
+import { MarkdownConverterUtil } from "@/utility/other/markdown-converter";
 
 export function ChatBotPage() {
     const [messages, setMessages] = useState<{ text: string; sender: string }[]>([]);
     const [inputValue, setInputValue] = useState("");
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (inputValue.trim()) {
-            // Add user message
             setMessages((prevMessages) => [
                 ...prevMessages,
                 { text: inputValue.trim(), sender: "user" },
             ]);
-
+            const data = await SubmitHandlerUtil.onSubmitGet<string>(`/s/auth/faq-bot?text=${inputValue}`);
             setInputValue("");
-
-            // Simulate bot response
-            setTimeout(() => {
-                setMessages((prevMessages) => [
-                    ...prevMessages,
-                    { text: `${inputValue}`, sender: "bot" },
-                ]);
-            }, 1000);
+            setMessages((prevMessages) => [
+                ...prevMessages,
+                { text: data || "No response", sender: "bot" },
+            ]);
         }
     };
 
@@ -63,8 +60,8 @@ export function ChatBotPage() {
                                 <div
                                     key={index}
                                     className={`flex ${message.sender === "user" ? "justify-end" : "justify-start"}`}>
-                                    <div className={`max-w-xs text-white ${message.sender === "user"
-                                        ? "bg-green-600 rounded-3xl p-4 shadow-lg shadow-green-400"
+                                    <div className={`max-w-xs  ${message.sender === "user"
+                                        ? "bg-green-600 text-white rounded-3xl py-2 px-4 shadow-lg shadow-green-400"
                                         : "text-neutral-800 flex  items-start mb-5"
                                         }`}>
                                         {message.sender == "bot" &&
@@ -77,8 +74,10 @@ export function ChatBotPage() {
                                                 </div>
                                             </div>
                                         }
-
-                                        {message.text}
+                                        {message.sender == "bot" ?
+                                            <MarkdownConverterUtil markdownString={message.text} />
+                                            : message.text
+                                        }
                                     </div>
                                 </div>
                             ))}

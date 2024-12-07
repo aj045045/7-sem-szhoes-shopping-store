@@ -58,3 +58,13 @@ class FaqService:
         vs = VectorService()
         vs.delete_vector('faq',str(model.id))
         model.delete()
+        
+    @staticmethod
+    def faqBot(query:str):
+        preProcess = PreProcessingService()
+        encodedText = preProcess.encode_text(query)
+        vs = VectorService()
+        value = vs.query_vector('faq',encodedText.tolist(),1)
+        faq_items = FaqModel.objects(id=value[0]).first()
+        faq_data = {**faq_items.to_mongo().to_dict(), "_id": str(faq_items.id)}
+        return faq_data['answer']

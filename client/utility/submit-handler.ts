@@ -2,6 +2,31 @@ import { ResponseInterface } from '@/interfaces/response';
 import { ToastUtil } from './toast';
 
 export class SubmitHandlerUtil {
+    static async onSubmitGet<T>(url: string): Promise<T | undefined> {
+        try {
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            const result: ResponseInterface<T> = await response.json();
+            if (result.status === "error" && result.message) {
+                ToastUtil.error(result.message);
+                return undefined; 
+            }
+            return result.data;
+    
+        } catch (error) {
+            ToastUtil.error("An error occurred while fetching data.");
+            return undefined;  // or you can rethrow the error if needed
+        }
+    }
+    
+
     static async onSubmitPost<T>(url: string, data: T) {
         fetch(url, {
             method: 'POST',
