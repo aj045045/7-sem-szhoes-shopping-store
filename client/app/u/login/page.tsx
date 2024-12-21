@@ -50,7 +50,7 @@ export default function LoginApp() {
                     if(result.data.role == "customer"){
                         router.push("customer/profile");
                     }else{
-                        router.push("/admin");
+                        router.push("/admin/dashboard");
                     }
                 }
             })

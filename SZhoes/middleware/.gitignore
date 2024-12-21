@@ -1,0 +1,23 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.class
+
+
+# Unit test / coverage reports
+.cache
+*.cover
+*.py,cover
+.pytest_cache/
+
+# VSCode
+.vscode/
+
+# Local settings
+*.local
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Enviroment
+.venv

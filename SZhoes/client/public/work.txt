@@ -1,0 +1,52 @@
+
+
+** Css **
+Feedback - " Still have questions? Contact our support" section
+Blog - Recent post and Category section in right
+
+** WORKS **
+User Management
+Product Management
+Review and Rating Management
+Newsletter Management
+
+Cart Management
+Payment Management
+Order Management
+
+
+** Slogan **
+- "Smell-free shoes, happy feet all day!"
+- "Smell the Difference"
+(message) Experience the refreshing scent in every shoe
+
+**Tagline** 
+- "Shoes That Keep You Fresh"
+
+** Other **
+[Footer]
+Career
+
+[E-Commerce (detail-nike)]
+    Details
+    images and tests
+    Feedback
+    recommendation
+
+- Featured products
+- Best Seller
+- Trending
+
+
+
+## Emails types
+
+- Order Confirmation
+- Shipping Confirmation
+- Delivery Confirmation
+- Transactional Emails
+- Promotional Emails
+- Abandoned Cart Emails
+- Customer Feedback Emails
+- Subscription Emails
+- Returns and Refunds

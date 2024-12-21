@@ -40,7 +40,7 @@ export default function AdminLayout({
         data: string;
     }
     const logOutAdmin = () => {
-        router.push('/login');
+        router.push('/u/login');
     }
     const MenuMap: MenuProps[] = [
         { link: "dashboard", data: "dashboard", icon: <LuLayoutDashboard /> },

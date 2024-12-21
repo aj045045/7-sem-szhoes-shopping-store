@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% block head %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title required %}{% endblock %} | SZhoes </title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='icon.png') }}">
+    {% endblock %}
+</head>
+
+<body>
+    <div>{% block content %}{% endblock %}</div>
+    <p style="position: fixed; bottom: 0; left: 0; width: 100%; background-color: #d4d4d4; padding: 10px; margin-bottom: 0px;
+        text-align:center; font-family: Arial, sans-serif; box-shadow: 0 -2px 5px rgba(0,0,0,0.1);">
+        Copyright&#169; 2024 SZhoes. All rights are reserved
+    </p>
+</body>
+
+</html>

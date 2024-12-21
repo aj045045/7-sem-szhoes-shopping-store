@@ -32,7 +32,7 @@ export function ChatBotPage() {
 
     return (
         <>
-            <Sheet defaultOpen={true}>
+            <Sheet>
                 <SheetTrigger>
                     <div className="fixed bottom-4 right-4 z-50">
                         <div className="bg-green-500 text-white p-2 rounded-full shadow-lg hover:bg-green-600 transition-all duration-200">

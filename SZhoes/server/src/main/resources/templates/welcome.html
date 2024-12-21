@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${spring_app} + ' | SZhoes'"></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" th:href="@{/icon.png}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+
+        h2 {
+            color: #555454;
+        }
+
+        p {
+            user-select: none;
+            color: #474646;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Welcome to Spring Boot <span th:text="${spring_app}"></span> Server</h1>
+    </header>
+    <section style="margin-top: 30px;">
+        <h2>In <span th:text="${spring_app}"></span> server, Spring Boot is used for:</h2>
+        <ul>
+            <li>Database Connection</li>
+            <li>Database Operation</li>
+            <li>Client Request Handling</li>
+        </ul>
+    </section>
+
+    <p style="position: fixed; bottom: 0; left: 0; width: 100%; background-color: #d4d4d4; padding: 10px; margin-bottom: 0px;
+            text-align:center; font-family: Arial, sans-serif; box-shadow: 0 -2px 5px rgba(0,0,0,0.1);">
+        Copyright&#169; 2024 SZhoes. All rights are reserved
+    </p>
+</body>
+
+</html>
